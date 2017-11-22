@@ -13,3 +13,10 @@ the Software Serial Communication based on the baudrate which was found
 You can start to set up with AT command without boring works
 
 Written by Eunchan Park (박은찬)
+
+![](https://github.com/happythingsmaker/Bluetooth_Baud_Finder/blob/master/wiki/20171121222018.jpg)
+![](https://github.com/happythingsmaker/Bluetooth_Baud_Finder/blob/master/wiki/20171121222105.jpg)
+![](https://github.com/happythingsmaker/Bluetooth_Baud_Finder/blob/master/wiki/20171121235521.jpg)
+
+
+![alt text](http://url/to/img.png)
