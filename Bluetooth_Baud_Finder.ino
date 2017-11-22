@@ -1,15 +1,15 @@
 /*********************************************************
     BLUETOOTH BAUD FINDER
     This is an Arduino Code for Modifying Bluetooth Setting such as HC05, HM10
-        
+
     There are many version of Bluetooth Modules
     Everytime I tried to set up bluetooth, I had to select various baudrate settings.
-    
-    This code finds baudrate of Bluetooth and set 
+
+    This code finds baudrate of Bluetooth and set
     the Software Serial Communication based on the baudrate which was found
-    
+
     You can start to set up with AT command without boring works
-    
+
     Written by Eunchan Park (박은찬)
     BSD license, all text above must be included in any redistribution
 **********************************************************/
@@ -20,7 +20,10 @@
 SoftwareSerial BTSerial(PIN_NUMBER_SW_SERIAL_RX, PIN_NUMBER_SW_SERIAL_TX);
 void setup() {
     Serial.begin(9600);
-    BTSerial.begin(checkBaudRate());
+    long tempBaud = checkBaudRate();
+    //long tempBaud = 9600;
+    BTSerial.begin(tempBaud );
+    Serial.begin(tempBaud );
 }
 
 void loop() {
@@ -56,10 +59,37 @@ long checkBaudRate() {
                     Serial.println("Received something");
                     Serial.print("FOUND BAUD : ");
                     Serial.println(baud[i]);
+                    Serial.print("YOU NEED TO CHANGE TERMINAL BAUD RATE AS : ");
+                    Serial.println(baud[i]);
+                    Serial.println("WITH <CR> & <NL>");
+                    delay(100);
                     return baud[i];
                 }
-                delay(10);
-                if (innerCount ++ > 10) {
+                delay(1);
+                if (innerCount ++ > 100) {
+                    break;
+                }
+            }
+
+            //some bluetooth don't react when they receive  <CR> & <NL>
+            //in this case, we need to send only AT
+            BTSerial.write("AT");
+
+            BTSerial.listen();
+            innerCount = 0;
+            while (1) {
+                while (BTSerial.available()) {
+                    Serial.println("Received something");
+                    Serial.print("FOUND BAUD : ");
+                    Serial.println(baud[i]);
+                    Serial.print("YOU NEED TO CHANGE TERMINAL BAUD RATE AS : ");
+                    Serial.println(baud[i]);
+                    Serial.println("WITHOUT <CR> & <NL>");
+                    delay(100);
+                    return baud[i];
+                }
+                delay(1);
+                if (innerCount ++ > 100) {
                     break;
                 }
             }
