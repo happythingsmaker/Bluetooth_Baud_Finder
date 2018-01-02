@@ -21,7 +21,7 @@ SoftwareSerial BTSerial(PIN_NUMBER_SW_SERIAL_RX, PIN_NUMBER_SW_SERIAL_TX);
 void setup() {
     Serial.begin(9600);
     long tempBaud = checkBaudRate();
-    //long tempBaud = 9600;
+//    long tempBaud = 38400;
     BTSerial.begin(tempBaud );
     Serial.begin(tempBaud );
 }
@@ -45,7 +45,8 @@ long checkBaudRate() {
                      1000000, 23400, 460800, 921600, 1382400
                     };
     Serial.println("http://HappyThingsMaker.com");
-    while (1) {
+    int repeatCount = 10;
+    while (repeatCount --) {
         for (int i = 0; i < 18 ; i ++) {
             Serial.print("TESTING BAUD : ");
             Serial.println(baud[i]);
